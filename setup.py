@@ -3,32 +3,62 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import yfinance as yf
 
-# Retreiving data from 6/18/2021 because it's 365 days before 12/01/2022 + 200 days for 200 day moving average
+# Tool to help write repetitive code by creating a function to write the stock ticker in Technical Analysis part of code without having to hardcode ticker symbols
+tickers = ["PFE", "AAPL", "NKE", "F", "JPM", "CHGG", "ETD", "CROX", "FIVE"]
+names = ["Pfizer Inc.", "Apple Inc", "Nike Inc", "Ford Motor Company", "JPMorgan Chase & Co", "Chegg Inc", "Ethan Allen Interiors Inc", "Crocs, Inc.", "Five Below Inc", "First Horizon Corp"]
+i = -1
+j = -1
 
-# Pfizer: PFE
-adjClosePFE = yf.download("PFE", start='2021-06-18', end='2022-12-01')
+def currentTicker():
+    global i
+    i = i + 1
+    return tickers[i]
 
-# Apple: AAPL
-adjCloseAAPL = yf.download("AAPL", start='2021-06-18', end='2022-12-01')
+def currentName():
+    global j
+    j = j + 1
+    return names[j]
 
-# Nike: NKE
-adjCloseNKE = yf.download("NKE", start='2021-06-18', end='2022-12-01')
+# Retreiving data from 02/10/2021 - 12/01/2022 because it's 12mo before 12/01/2022 + 200 work days earlier to get 200 day moving average data for the entire back-testing period
+startDate = '2021-02-10'
+endDate = '2022-12-01'
 
-# Ford: F
-adjCloseF = yf.download("F", start='2021-06-18', end='2022-12-01')
+# Pfizer Inc.: PFE
+adjClosePFE = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
+plt.plot(adjClosePFE, data=adjClosePFE)
+plt.ylabel('Adjusted Close Price (in $)')
+plt.xlabel('Date')
+plt.xticks(rotation = 90)
+plt.title(currentName() + " Adjusted Close Price from " + startDate + " - " + endDate + " (12 mo & 200 days between dates)")
+plt.legend(loc="upper left")
+plt.show()
 
-# JP Morgan Chase Co: JPM
-adjCloseJPM = yf.download("JPM", start='2021-06-18', end='2022-12-01')
+'''
+# Apple Inc: AAPL
+adjCloseAAPL = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
 
-# Chegg: CHGG
-adjCloseCHGG = yf.download("CHGG", start='2021-06-18', end='2022-12-01')
+# Nike Inc: NKE
+adjCloseNKE = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
 
-# Ethan Allen: ETD
-adjCloseETD = yf.download("ETD", start='2021-06-18', end='2022-12-01')
+# Ford Motor Company: F
+adjCloseF = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
 
-# Crocs: CROX
-adjCloseCROX = yf.download("CROX", start='2021-06-18', end='2022-12-01')
+# JPMorgan Chase & Co: JPM
+adjCloseJPM = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
 
-# Five Below: FIVE
-adjCloseFIVE = yf.download("FIVE", start='2021-06-18', end='2022-12-01')
+# Chegg Inc: CHGG
+adjCloseCHGG = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
 
+# Ethan Allen Interiors Inc: ETD
+adjCloseETD = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
+
+# Crocs, Inc.: CROX
+adjCloseCROX = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
+
+# Five Below Inc: FIVE
+adjCloseFIVE = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
+
+# First Horizon Corp: FHN
+adjCloseFHN = yf.download(currentTicker(), start=startDate, end=endDate)["Adj Close"]
+
+'''
